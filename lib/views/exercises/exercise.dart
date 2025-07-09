@@ -4,6 +4,7 @@ import 'package:untitled/views/exercises/question.dart';
 import '../../constants/theme.dart';
 import '../../controllers/ExerciseController.dart';
 import '../../models/exercise.dart';
+import 'fill_blank_page.dart';
 
 
 class ExercisesListPage extends StatefulWidget {
@@ -135,16 +136,34 @@ class _ExercisesListPageState extends State<ExercisesListPage> {
               ),
               // Dans votre liste d'exercises
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => QuestionsPage(
-                      exerciseId: exercise.id,
-                      exerciseTitle: exercise.title,
+                if (exercise.type == "qcm") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => QuestionsPage(
+                        exerciseId: exercise.id,
+                        exerciseTitle: exercise.title,
+                      ),
                     ),
-                  ),
-                );
+                  );
+                } else if (exercise.type == "fill_blanks") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => FillBlankPage(
+                        exerciseId: exercise.id,
+                        exerciseTitle: exercise.title,
+                      ),
+                    ),
+                  );
+                } else {
+                  // Optionnel : gérer d'autres types ou afficher un message d'erreur
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Type d'exercice non supporté")),
+                  );
+                }
               },
+
               child: Text(
                 exercise.studentProgress == null
                     ? 'Start Exercise'

@@ -38,6 +38,8 @@ flutter:
 
   assets:
     - assets/sokrat.jpg
+    - assets/avatar.jpg
+    - assets/avar.jpg
 
 
 dev_dependencies:

@@ -7,7 +7,9 @@ class AuthController {
 
     if (response['statusCode'] == 200 && response['data']['message'] == 'Login successful') {
       final token = response['data']['token'];
-      await TokenStorageService.saveToken(token); // Sauvegarde du token
+      final user = response['data']['user'];
+
+      await TokenStorageService.saveToken(token, user['name']);
 
       return {
         'success': true,

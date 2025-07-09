@@ -12,4 +12,7 @@ class ApiEndpoints {
 
   static String exerciseDetails(String exerciseId) =>
       "$baseUrl/exercises/$exerciseId";
+  static String submitAnswers(String exerciseId) =>
+      "$baseUrl/exercises/$exerciseId/submit";
+
 }

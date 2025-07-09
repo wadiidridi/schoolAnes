@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../constants/theme.dart';
 import '../../controllers/auth_controller.dart';
+import '../navbar/mainScreen.dart';
 import '../subjects/subject_list_page.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -15,8 +16,8 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isPasswordVisible = false;
   bool _isLoading = false;
 
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController(text:'riadh@school.com' );
+  final TextEditingController _passwordController = TextEditingController(text: 'student123');
 
   void _submit() async {
     if (!_formKey.currentState!.validate()) return;
@@ -32,7 +33,12 @@ class _SignInScreenState extends State<SignInScreen> {
 
     print("=== Auth Response ===");
     print(response);
+    final data = response['data'];
+    final token = data['token'];
+    final name = data['user']['name'];
 
+    print("Token : $token");
+    print("Nom : $name");
     if (response['success']) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(response['message']), backgroundColor: Colors.green),
@@ -40,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const SubjectListPage()),
+        MaterialPageRoute(builder: (context) => const MainScreen()),
       );
     } else {
       showDialog(

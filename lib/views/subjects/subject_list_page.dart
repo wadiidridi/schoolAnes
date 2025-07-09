@@ -4,7 +4,6 @@ import '../../constants/theme.dart';
 import '../../models/subject.dart';
 import '../exercises/exercise.dart';
 
-
 class SubjectListPage extends StatefulWidget {
   const SubjectListPage({super.key});
 
@@ -21,14 +20,31 @@ class _SubjectListPageState extends State<SubjectListPage> {
     _futureSubjects = SubjectController.getSubjects();
   }
 
+  // Méthode pour obtenir l'icône appropriée selon la matière
+  IconData _getSubjectIcon(String subjectName) {
+    switch (subjectName.toLowerCase()) {
+      case 'math':
+      case 'mathematics':
+      case 'maths':
+        return Icons.calculate;
+      case 'science':
+        return Icons.science;
+      case 'history':
+        return Icons.history;
+      case 'english':
+      case 'français':
+      case 'french':
+        return Icons.menu_book;
+      default:
+        return Icons.school; // Icône par défaut
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-      appBar: AppBar(
-        title: const Text("Choisir une matière"),
-        backgroundColor: AppTheme.primary,
-      ),
+
       body: FutureBuilder<List<Subject>>(
         future: _futureSubjects,
         builder: (context, snapshot) {
@@ -43,20 +59,21 @@ class _SubjectListPageState extends State<SubjectListPage> {
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
-                children: subjects.map((subject) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: AppTheme.accent,
-                        foregroundColor: Colors.black,
-                        minimumSize: const Size.fromHeight(60),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16),
-                        ),
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      "Subjects",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
                       ),
-// Update the onPressed in your SubjectListPage
-                      onPressed: () {
+                    ),
+                  ),
+                  ...subjects.map((subject) {
+                    return InkWell(
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -67,13 +84,29 @@ class _SubjectListPageState extends State<SubjectListPage> {
                           ),
                         );
                       },
-                      child: Text(
-                        subject.name,
-                        style: const TextStyle(fontSize: 18),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Row(
+                          children: [
+                            Icon(
+                              _getSubjectIcon(subject.name),
+                              color: AppTheme.primary,
+                              size: 28,
+                            ),
+                            const SizedBox(width: 16),
+                            Text(
+                              subject.name,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                }).toList(),
+                    );
+                  }).toList(),
+                ],
               ),
             );
           }
