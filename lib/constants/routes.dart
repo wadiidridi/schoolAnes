@@ -10,7 +10,7 @@ import '../views/auth/signin_page.dart';
 
 class AppRoutes {
   static const String login = '/login';
-  // static const String home = '/home';
+  static const String home = '/home';
   // static const String support = '/support';
   // static const String exercises = '/exercises';
 
@@ -19,8 +19,8 @@ class AppRoutes {
       case login:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
 
-      // case support:
-      //   return MaterialPageRoute(builder: (_) =>  SupportPage());
+      case home:
+        return MaterialPageRoute(builder: (_) =>  SignInPage());
       // case exercises:
       //   final args = settings.arguments as Map<String, dynamic>;
       //   return MaterialPageRoute(

@@ -1,14 +1,15 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
+
 import '../constants/config.dart';
-import '../models/subject.dart';
+import '../models/SubjectAndClassResponse.dart';
 import 'TokenStorageService.dart';
 
-
 class SubjectService {
-  static Future<List<Subject>> fetchSubjects() async {
+  static Future<SubjectAndClassResponse> fetchSubjects() async {
     final token = await TokenStorageService.getToken();
-    final url = Uri.parse(ApiEndpoints.subject);
+    final url = Uri.parse(ApiEndpoints.subject); // Assure-toi que c’est bien l’endpoint correct
 
     final response = await http.get(
       url,
@@ -20,10 +21,9 @@ class SubjectService {
 
     if (response.statusCode == 200) {
       final jsonBody = jsonDecode(response.body);
-      final List<dynamic> subjectsJson = jsonBody['subjects'];
-      return subjectsJson.map((s) => Subject.fromJson(s)).toList();
+      return SubjectAndClassResponse.fromJson(jsonBody);
     } else {
-      throw Exception('Erreur de chargement des matières');
+      throw Exception('Erreur de chargement des matières et de la classe');
     }
   }
 }

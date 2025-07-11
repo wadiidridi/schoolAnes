@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../controllers/subject_controller.dart';
 import '../../constants/theme.dart';
+import '../../models/SubjectAndClassResponse.dart';
 import '../../models/subject.dart';
 import '../exercises/exercise.dart';
 
@@ -12,15 +13,20 @@ class SubjectListPage extends StatefulWidget {
 }
 
 class _SubjectListPageState extends State<SubjectListPage> {
-  late Future<List<Subject>> _futureSubjects;
+  late Future<SubjectAndClassResponse> _futureResponse;
 
   @override
   void initState() {
     super.initState();
-    _futureSubjects = SubjectController.getSubjects();
+    _futureResponse = SubjectController.getSubjects()
+      ..then((response) {
+        print('✅ ID Classe : ${response.classData.id}');
+        for (var subject in response.subjects) {
+          print('📚 Matière : ${subject.name} (ID: ${subject.id})');
+        }
+      });
   }
 
-  // Méthode pour obtenir l'icône appropriée selon la matière
   IconData _getSubjectIcon(String subjectName) {
     switch (subjectName.toLowerCase()) {
       case 'math':
@@ -36,7 +42,7 @@ class _SubjectListPageState extends State<SubjectListPage> {
       case 'french':
         return Icons.menu_book;
       default:
-        return Icons.school; // Icône par défaut
+        return Icons.school;
     }
   }
 
@@ -44,18 +50,20 @@ class _SubjectListPageState extends State<SubjectListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppTheme.background,
-
-      body: FutureBuilder<List<Subject>>(
-        future: _futureSubjects,
+      body: FutureBuilder<SubjectAndClassResponse>(
+        future: _futureResponse,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             return Center(child: Text("Erreur : ${snapshot.error}"));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          } else if (!snapshot.hasData || snapshot.data!.subjects.isEmpty) {
             return const Center(child: Text("Aucune matière trouvée"));
           } else {
-            final subjects = snapshot.data!;
+            final response = snapshot.data!;
+            final subjects = response.subjects;
+            final classId = response.classData.id; // 👉 disponible ici
+
             return Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
@@ -80,6 +88,7 @@ class _SubjectListPageState extends State<SubjectListPage> {
                             builder: (_) => ExercisesListPage(
                               subjectId: subject.id,
                               subjectName: subject.name,
+                              classId: classId, // 👉 si tu veux le transmettre
                             ),
                           ),
                         );

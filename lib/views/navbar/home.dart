@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'app_drawer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
-
-
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -14,6 +11,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String _userName = 'Utilisateur';
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>(); // ← Ajouté
 
   @override
   void initState() {
@@ -30,38 +28,53 @@ class _HomePageState extends State<HomePage> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey, // ← Ajouté
       drawer: const AppDrawer(),
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text('Accueil'),
-        backgroundColor: Theme.of(context).primaryColor,
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.person),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // Bouton pour ouvrir le Drawer (à gauche)
+              Align(
+                alignment: Alignment.centerLeft,
+                child: IconButton(
+                  icon: const Icon(Icons.person, size: 28),
+                  onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+                ),
+              ),
+
+              const SizedBox(height: 8),
+
+              // Titre "Accueil"
+              Text(
+                'Accueil',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 26,
+                ),                textAlign: TextAlign.center,
+
+              ),
+
+
+              const SizedBox(height: 16),
+
               // Titre Bonjour
               Text(
                 'Bonjour!',
-                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 24,
                 ),
               ),
               const SizedBox(height: 8),
 
-              // Sous-titre Good Student
+              // Nom utilisateur
               Text(
                 _userName,
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -71,97 +84,11 @@ class _HomePageState extends State<HomePage> {
               ),
               const SizedBox(height: 24),
 
-              // Section Messagerie Rapide
-
-
-
-              // Section Tâches
-
+              // Tu peux ajouter ici d'autres sections (messagerie, tâches, etc.)
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-// Widget pour les chips des enseignants
-class _TeacherChip extends StatelessWidget {
-  final String name;
-
-  const _TeacherChip({required this.name});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 12),
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey.shade300),
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Center(
-        child: Text(
-          name,
-          style: const TextStyle(fontSize: 14),
-        ),
-      ),
-    );
-  }
-}
-
-// Widget pour les éléments de tâche
-class _TaskItem extends StatelessWidget {
-  final String deadline;
-  final String title;
-  final String status;
-
-  const _TaskItem({
-    required this.deadline,
-    required this.title,
-    required this.status,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Échéance : $deadline',
-          style: TextStyle(
-            color: Colors.grey.shade600,
-            fontSize: 14,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        ),
-        const SizedBox(height: 4),
-        Text(
-          'Statut : $status',
-          style: const TextStyle(fontSize: 14),
-        ),
-        const SizedBox(height: 8),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              padding: const EdgeInsets.symmetric(vertical: 12),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text('Démarrer'),
-          ),
-        ),
-      ],
     );
   }
 }

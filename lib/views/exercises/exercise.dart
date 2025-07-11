@@ -14,7 +14,7 @@ class ExercisesListPage extends StatefulWidget {
   const ExercisesListPage({
     super.key,
     required this.subjectId,
-    required this.subjectName,
+    required this.subjectName, required String classId,
   });
 
   @override

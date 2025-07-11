@@ -3,14 +3,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 class TokenStorageService {
   static const _tokenKey = 'auth_token';
   static const _nameKey = 'name';
-
+  static const _classIdKey = 'class_id';
   // ✅ Sauvegarde du token et nom
   static Future<void> saveToken(String token, String name) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_tokenKey, token);
     await prefs.setString(_nameKey, name);
   }
-
+  static Future<void> saveClassId(String classId) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(_classIdKey, classId);
+  }
   // ✅ Lire le token
   static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -22,6 +25,12 @@ class TokenStorageService {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(_nameKey);
   }
+
+  static Future<String?> getClassId() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString(_classIdKey);
+  }
+
 
   // ✅ Supprimer toutes les infos
   static Future<void> clearToken() async {
