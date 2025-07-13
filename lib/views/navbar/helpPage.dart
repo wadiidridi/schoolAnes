@@ -10,6 +10,8 @@ class helpPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
+        automaticallyImplyLeading: false, // ✅ bonne position ici
+
         title: const Text('Plus'),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),

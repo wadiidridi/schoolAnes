@@ -5,6 +5,8 @@ import '../../constants/theme.dart';
 import '../../controllers/subject_controller.dart';
 import '../../services/TokenStorageService.dart';
 import '../exercises/exercise.dart';
+import '../grades/grades_page.dart';
+import '../subjects/note_subject.dart';
 import '../subjects/subject_list_page.dart';
 import 'helpPage.dart';
 import 'home.dart';
@@ -50,7 +52,8 @@ class _MainScreenState extends State<MainScreen> {
           const HomePage(),
           const SubjectListPage(),
           TeacherListPage(classId: classId),
-          const helpPage(),
+          const SubjectNoteList(),
+          helpPage(),
         ];
       });
     } catch (e) {

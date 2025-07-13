@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled/views/auth/sign_in.dart';
 import 'constants/routes.dart';
 import 'constants/theme.dart';
 import 'views/auth/signin_page.dart';
@@ -15,8 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
-      home: const SignInPage(),
-      initialRoute: AppRoutes.home,
+      initialRoute: AppRoutes.login,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

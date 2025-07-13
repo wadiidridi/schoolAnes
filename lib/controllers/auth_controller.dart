@@ -10,6 +10,7 @@ class AuthController {
       final user = response['data']['user'];
 
       await TokenStorageService.saveToken(token, user['name']);
+      await TokenStorageService.saveUserId(user['id']); // ✅ On sauvegarde l'ID ici
 
       return {
         'success': true,

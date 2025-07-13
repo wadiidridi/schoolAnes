@@ -4,15 +4,16 @@ import '../../constants/theme.dart';
 import '../../models/SubjectAndClassResponse.dart';
 import '../../models/subject.dart';
 import '../exercises/exercise.dart';
+import '../grades/grades_page.dart';
 
-class SubjectListPage extends StatefulWidget {
-  const SubjectListPage({super.key});
+class SubjectNoteList extends StatefulWidget {
+  const SubjectNoteList({super.key});
 
   @override
-  State<SubjectListPage> createState() => _SubjectListPageState();
+  State<SubjectNoteList> createState() => _SubjectNoteListState();
 }
 
-class _SubjectListPageState extends State<SubjectListPage> {
+class _SubjectNoteListState extends State<SubjectNoteList> {
   late Future<SubjectAndClassResponse> _futureResponse;
 
   @override
@@ -50,9 +51,10 @@ class _SubjectListPageState extends State<SubjectListPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mes Matières'),
+        title: const Text('Mes Notes'),
         automaticallyImplyLeading: false, // ✅ bonne position ici
       ),
+
       backgroundColor: AppTheme.background,
       body: FutureBuilder<SubjectAndClassResponse>(
         future: _futureResponse,
@@ -75,13 +77,13 @@ class _SubjectListPageState extends State<SubjectListPage> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(bottom: 16.0),
-                    child: Text(
-                      "Subjects",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // child: Text(
+                    //   "Subjects",
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                   ),
                   ...subjects.map((subject) {
                     return InkWell(
@@ -89,10 +91,9 @@ class _SubjectListPageState extends State<SubjectListPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (_) => ExercisesListPage(
+                            builder: (_) => GradesPage(
                               subjectId: subject.id,
                               subjectName: subject.name,
-                              classId: classId, // 👉 si tu veux le transmettre
                             ),
                           ),
                         );
