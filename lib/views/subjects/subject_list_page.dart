@@ -75,13 +75,13 @@ class _SubjectListPageState extends State<SubjectListPage> {
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(bottom: 16.0),
-                    child: Text(
-                      "Subjects",
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    // child: Text(
+                    //   "Subjects",
+                    //   style: TextStyle(
+                    //     fontSize: 20,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
                   ),
                   ...subjects.map((subject) {
                     return InkWell(

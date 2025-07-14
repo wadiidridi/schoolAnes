@@ -13,10 +13,7 @@ class helpPage extends StatelessWidget {
         automaticallyImplyLeading: false, // ✅ bonne position ici
 
         title: const Text('Plus'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+
         actions: const [
           Icon(Icons.mail_outline),
           SizedBox(width: 16),

@@ -114,36 +114,47 @@ class _QuestionsPageState extends State<QuestionsPage> {
 
   Widget _buildQuestionCard(Question question, int questionIndex) {
     return Card(
-      margin: const EdgeInsets.all(8),
-      color: AppTheme.accent,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      color: Colors.white,
+      elevation: 4,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Question ${questionIndex + 1}',
+              'Question ${questionIndex + 1} of ${_selectedOptions.length}',
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
             ),
             const SizedBox(height: 8),
-            Text(question.questionText),
-            const SizedBox(height: 12),
+            Text(
+              question.questionText,
+              style: const TextStyle(fontSize: 15),
+            ),
+            const SizedBox(height: 16),
             ...question.options.asMap().entries.map((entry) {
               final index = entry.key;
               final option = entry.value;
-              return RadioListTile<int>(
+
+              return CheckboxListTile(
                 title: Text(option.text),
-                value: index,
-                groupValue: _selectedOptions[questionIndex],
-                onChanged: (value) => setState(() {
-                  _selectedOptions[questionIndex] = value;
-                }),
+                value: _selectedOptions[questionIndex] == index,
                 activeColor: AppTheme.primary,
+                controlAffinity: ListTileControlAffinity.leading,
+                contentPadding: EdgeInsets.zero,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                onChanged: (bool? selected) {
+                  setState(() {
+                    _selectedOptions[questionIndex] =
+                    selected! ? index : null;
+                  });
+                },
               );
-            }).toList(),
+            }),
           ],
         ),
       ),

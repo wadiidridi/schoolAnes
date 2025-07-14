@@ -83,7 +83,7 @@ class _ExercisesListPageState extends State<ExercisesListPage> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      color: AppTheme.accent,
+      color: AppTheme.background,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

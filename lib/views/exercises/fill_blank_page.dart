@@ -118,7 +118,7 @@ class _FillBlankPageState extends State<FillBlankPage> {
                   itemBuilder: (context, index) {
                     final question = questions[index];
                     return Card(
-                      color: AppTheme.accent,
+                      color: AppTheme.background,
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       child: Padding(
                         padding: const EdgeInsets.all(16),

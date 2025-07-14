@@ -27,8 +27,8 @@ class _TeacherListPageState extends State<TeacherListPage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         title: const Text("Liste des professeurs"),
-        backgroundColor: AppTheme.primary,
-        foregroundColor: Colors.white,
+        // backgroundColor: AppTheme.primary,
+        foregroundColor: Colors.black,
       ),
       body: FutureBuilder<List<TeacherData>>(
         future: _futureTeachers,
