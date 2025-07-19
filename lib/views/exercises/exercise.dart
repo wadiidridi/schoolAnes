@@ -125,7 +125,29 @@ class _ExercisesListPageState extends State<ExercisesListPage> {
               ),
             ],
             const SizedBox(height: 16),
-            ElevatedButton(
+            exercise.remainingAttempts == 0
+                ? Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.green.shade100,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.check, color: Colors.green),
+                  SizedBox(width: 8),
+                  Text(
+                    'Terminé',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.green,
+                    ),
+                  ),
+                ],
+              ),
+            )
+                : ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.primary,
                 foregroundColor: Colors.white,
@@ -134,7 +156,6 @@ class _ExercisesListPageState extends State<ExercisesListPage> {
                   borderRadius: BorderRadius.circular(8),
                 ),
               ),
-              // Dans votre liste d'exercises
               onPressed: () {
                 if (exercise.type == "qcm") {
                   Navigator.push(
@@ -157,21 +178,17 @@ class _ExercisesListPageState extends State<ExercisesListPage> {
                     ),
                   );
                 } else {
-                  // Optionnel : gérer d'autres types ou afficher un message d'erreur
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("Type d'exercice non supporté")),
+                    const SnackBar(content: Text("Type d'exercice non supporté")),
                   );
                 }
               },
-
               child: Text(
                 exercise.studentProgress == null
                     ? 'Start Exercise'
-                    : exercise.remainingAttempts > 0
-                    ? 'Try Again'
-                    : 'View Results',
+                    : 'Try Again',
               ),
-            ),
+            )
           ],
         ),
       ),

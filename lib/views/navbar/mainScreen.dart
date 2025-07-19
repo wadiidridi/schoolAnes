@@ -51,8 +51,9 @@ class _MainScreenState extends State<MainScreen> {
         _pages = [
           const HomePage(),
           const SubjectListPage(),
-          TeacherListPage(classId: classId),
           const SubjectNoteList(),
+          TeacherListPage(classId: classId),
+
           helpPage(),
         ];
       });
@@ -92,11 +93,11 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'Teachers',
+            label: 'Note',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'AI Tutor',
+            label: 'Teachers',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.more_horiz),
