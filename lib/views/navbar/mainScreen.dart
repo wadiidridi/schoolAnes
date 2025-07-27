@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:untitled/views/navbar/settingPage.dart';
+import 'package:untitled/views/navbar/Teacher.dart';
 
 import '../../constants/theme.dart';
 import '../../controllers/subject_controller.dart';

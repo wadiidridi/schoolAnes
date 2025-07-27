@@ -16,8 +16,8 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _isPasswordVisible = false;
   bool _isLoading = false;
 
-  final TextEditingController _emailController = TextEditingController(text:'riadh@school.com' );
-  final TextEditingController _passwordController = TextEditingController(text: 'student123');
+  final TextEditingController _emailController = TextEditingController(text:'anas@gmail.com' );
+  final TextEditingController _passwordController = TextEditingController(text: '123456');
 
   void _submit() async {
     if (!_formKey.currentState!.validate()) return;

@@ -18,5 +18,9 @@ class ApiEndpoints {
   static String teacher(String classId) =>
       "$baseUrl/classes/$classId/teachers";
 
+  static const String notification = "$baseUrl/notifications";
+
+  static String downloadAttachment(String notificationId, String filename) =>
+      "$baseUrl/notifications/$notificationId/attachments/$filename/download";
 
 }
