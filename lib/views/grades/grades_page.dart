@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../controllers/grade_controller.dart';
 import '../../models/grade.dart';
 import '../../services/TokenStorageService.dart';
+import '../navbar/app_bar_global.dart';
 
 class GradesPage extends StatefulWidget {
   final String subjectId;
@@ -68,7 +69,11 @@ class _GradesPageState extends State<GradesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Notes : ${widget.subjectName}')),
+      // appBar: AppBar(title: Text('Notes : ${widget.subjectName}')),
+      appBar: GlobalAppBar(title: 'Notes : ${widget.subjectName}',
+        showBackButton: true, // Active la flèche de retour
+      ),
+
       body: Column(
         children: [
           // 🔽 Filtres

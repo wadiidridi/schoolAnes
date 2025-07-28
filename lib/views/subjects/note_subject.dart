@@ -5,6 +5,7 @@ import '../../models/SubjectAndClassResponse.dart';
 import '../../models/subject.dart';
 import '../exercises/exercise.dart';
 import '../grades/grades_page.dart';
+import '../navbar/app_bar_global.dart';
 
 class SubjectNoteList extends StatefulWidget {
   const SubjectNoteList({super.key});
@@ -50,9 +51,12 @@ class _SubjectNoteListState extends State<SubjectNoteList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mes Notes'),
-        automaticallyImplyLeading: false, // ✅ bonne position ici
+      // appBar: AppBar(
+      //   title: const Text('Mes Notes'),
+      //   automaticallyImplyLeading: false, // ✅ bonne position ici
+      // ),
+      appBar: const GlobalAppBar(title: 'Mes Notes',
+        showBackButton: true, // Active la flèche de retour
       ),
 
       backgroundColor: AppTheme.background,

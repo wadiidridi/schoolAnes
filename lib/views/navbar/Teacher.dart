@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../controllers/teacher_controller.dart';
 import '../../models/teacher.dart';
 import '../../constants/theme.dart';
+import 'app_bar_global.dart';
 
 class TeacherListPage extends StatefulWidget {
   final String classId;
@@ -24,11 +25,14 @@ class _TeacherListPageState extends State<TeacherListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("Liste des professeurs"),
-        // backgroundColor: AppTheme.primary,
-        foregroundColor: Colors.black,
+      // appBar: AppBar(
+      //   automaticallyImplyLeading: false,
+      //   title: const Text("Liste des professeurs"),
+      //   // backgroundColor: AppTheme.primary,
+      //   foregroundColor: Colors.black,
+      // ),
+      appBar: const GlobalAppBar(title: 'Liste des professeurs',
+        showBackButton: true, // Active la flèche de retour
       ),
       body: FutureBuilder<List<TeacherData>>(
         future: _futureTeachers,

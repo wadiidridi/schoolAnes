@@ -1,7 +1,7 @@
-// widgets/app_bar_global.dart
 import 'package:flutter/material.dart';
-
 import '../../constants/theme.dart';
+
+import '../all_notifications_page.dart'; // <-- change si le chemin est différent
 
 class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
@@ -33,10 +33,26 @@ class GlobalAppBar extends StatelessWidget implements PreferredSizeWidget {
       )
           : null,
       actions: [
-        const Icon(Icons.mail_outline),
-        const SizedBox(width: 16),
-        const Icon(Icons.notifications_none),
-        const SizedBox(width: 16),
+        IconButton(
+          icon: const Icon(Icons.mail_outline),
+          onPressed: () {
+            // Navigator.push(
+            //   context,
+            //   MaterialPageRoute(builder: (context) => const MessagesPage()),
+            // );
+          },
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          icon: const Icon(Icons.notifications_none),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const NotificationsPage()),
+            );
+          },
+        ),
+        const SizedBox(width: 8),
         ...?additionalActions,
       ],
     );

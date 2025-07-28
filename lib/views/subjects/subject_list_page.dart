@@ -4,6 +4,7 @@ import '../../constants/theme.dart';
 import '../../models/SubjectAndClassResponse.dart';
 import '../../models/subject.dart';
 import '../exercises/exercise.dart';
+import '../navbar/app_bar_global.dart';
 
 class SubjectListPage extends StatefulWidget {
   const SubjectListPage({super.key});
@@ -49,10 +50,14 @@ class _SubjectListPageState extends State<SubjectListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mes Matières'),
-        automaticallyImplyLeading: false, // ✅ bonne position ici
+      // appBar: AppBar(
+      //   title: const Text('Mes Matières'),
+      //   automaticallyImplyLeading: false, // ✅ bonne position ici
+      // ),
+      appBar: const GlobalAppBar(title: 'Mes Matières',
+        showBackButton: true, // Active la flèche de retour
       ),
+
       backgroundColor: AppTheme.background,
       body: FutureBuilder<SubjectAndClassResponse>(
         future: _futureResponse,

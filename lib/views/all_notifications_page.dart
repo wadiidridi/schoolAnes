@@ -1,14 +1,47 @@
-// views/notifications_page.dart
 import 'package:flutter/material.dart';
 import '../../models/notification_model.dart';
-
+import '../../services/notification_service.dart';
 import '../constants/theme.dart';
-import 'NotificationDetailDialog.dart'; // <-- Assure-toi que le chemin est correct
+import 'NotificationDetailDialog.dart';
 
-class NotificationsPage extends StatelessWidget {
-  final List<NotificationModel> notifications;
+class NotificationsPage extends StatefulWidget {
+  const NotificationsPage({super.key});
 
-  const NotificationsPage({super.key, required this.notifications});
+  @override
+  State<NotificationsPage> createState() => _NotificationsPageState();
+}
+
+class _NotificationsPageState extends State<NotificationsPage> {
+  List<NotificationModel> _notifications = [];
+  bool _isLoading = true;
+  String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadNotifications();
+  }
+
+  Future<void> _loadNotifications() async {
+    setState(() {
+      _isLoading = true;
+      _errorMessage = null;
+    });
+
+    try {
+      final notifications = await NotificationService.getNotifications();
+      setState(() {
+        _notifications = notifications;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = 'Erreur de chargement des notifications';
+        _isLoading = false;
+      });
+      debugPrint('Erreur: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,15 +49,22 @@ class NotificationsPage extends StatelessWidget {
       backgroundColor: AppTheme.background,
       appBar: AppBar(
         backgroundColor: AppTheme.primary,
-        title: const Text('Toutes les notifications', style: TextStyle(color: Colors.white)),
+        title: const Text(
+          'Toutes les notifications',
+          style: TextStyle(color: Colors.white),
+        ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: notifications.isEmpty
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _errorMessage != null
+          ? Center(child: Text(_errorMessage!))
+          : _notifications.isEmpty
           ? const Center(child: Text('Aucune notification disponible'))
           : ListView.builder(
-        itemCount: notifications.length,
+        itemCount: _notifications.length,
         itemBuilder: (context, index) {
-          final notif = notifications[index];
+          final notif = _notifications[index];
           return Card(
             color: _getCardColorForPriority(notif.priority),
             elevation: 3,
@@ -55,10 +95,9 @@ class NotificationsPage extends StatelessWidget {
                     ),
                   ),
                   if (!notif.isRead)
-                    const Icon(Icons.circle, color: Colors.red, size: 10), // indicateur "non lu"
+                    const Icon(Icons.circle, color: Colors.red, size: 10),
                 ],
               ),
-
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,10 +110,7 @@ class NotificationsPage extends StatelessWidget {
                   if (notif.publishDate != null)
                     Text(
                       _formatDate(notif.publishDate!),
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
+                      style: const TextStyle(fontSize: 12, color: Colors.grey),
                     ),
                 ],
               ),
