@@ -6,6 +6,7 @@ class NotificationModel {
   final String priority;
   final DateTime? publishDate;
   final List<dynamic>? attachments;
+  final bool isRead; // <-- Nouveau champ
 
   NotificationModel({
     required this.id,
@@ -15,6 +16,7 @@ class NotificationModel {
     required this.priority,
     this.publishDate,
     this.attachments,
+    required this.isRead, // <-- Ajout ici
   });
 
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class NotificationModel {
           ? DateTime.parse(json['publishDate'])
           : null,
       attachments: json['attachments'] as List<dynamic>?,
+      isRead: json['isRead'] ?? false, // <-- Ajout ici
     );
   }
 }

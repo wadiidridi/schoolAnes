@@ -18,6 +18,9 @@ dependencies:
   flutter_svg: ^2.0.7
   path_provider: ^2.0.15
   permission_handler: ^11.3.0
+  device_info_plus: ^10.1.0
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -31,9 +34,9 @@ flutter:
     - assets/avatar.jpg
     - assets/avar.jpg
 
-  fonts:
-    - family: ComicNeue
-      fonts:
+#  fonts:
+#    - family: ComicNeue
+#      fonts:
 #        - asset: assets/fonts/ComicNeue-Regular.ttf
 #        - asset: assets/fonts/ComicNeue-Bold.ttf
 #          weight: 700

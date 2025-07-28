@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import '../../constants/theme.dart';
+import '../../services/TokenStorageService.dart'; // pour clearToken
 
 class helpPage extends StatelessWidget {
   const helpPage({super.key});
@@ -10,10 +10,8 @@ class helpPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppTheme.background,
       appBar: AppBar(
-        automaticallyImplyLeading: false, // ✅ bonne position ici
-
+        automaticallyImplyLeading: false,
         title: const Text('Plus'),
-
         actions: const [
           Icon(Icons.mail_outline),
           SizedBox(width: 16),
@@ -42,20 +40,35 @@ class helpPage extends StatelessWidget {
           _buildCardTile(Icons.settings_outlined, 'App Preferences'),
           const SizedBox(height: 8),
           _buildCardTile(Icons.info_outline, 'About'),
+          const SizedBox(height: 34),
+
+          // 🔓 Déconnexion avec action personnalisée
+          _buildCardTile(
+            Icons.logout,
+            'Déconnexion',
+            onTap: () async {
+              await TokenStorageService.clearToken();
+
+              // 🔁 Redirection vers la page de connexion et suppression des anciennes routes
+              Navigator.of(context).pushNamedAndRemoveUntil('/login', (route) => false);
+            },
+          ),
         ],
       ),
     );
   }
 
-  Widget _buildCardTile(IconData icon, String title) {
+  // 🔧 Version modifiée de _buildCardTile
+  Widget _buildCardTile(IconData icon, String title, {VoidCallback? onTap}) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       elevation: 0.5,
       child: ListTile(
         leading: Icon(icon),
         title: Text(title),
-        onTap: () {
-          // TODO: handle navigation
+        onTap: onTap ?? () {
+          // ✅ Par défaut, ne fait rien ou future navigation
+          debugPrint('Tapped on: $title');
         },
       ),
     );

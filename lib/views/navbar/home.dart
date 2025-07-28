@@ -6,6 +6,7 @@ import '../../models/notification_model.dart';
 import '../../services/notification_service.dart';
 import '../NotificationDetailDialog.dart';
 import '../all_notifications_page.dart';
+import 'app_bar_global.dart';
 import 'app_drawer.dart';
 
 class HomePage extends StatefulWidget {
@@ -120,7 +121,8 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       key: _scaffoldKey,
-      drawer: const AppDrawer(),
+      appBar: const GlobalAppBar(title: ''),
+      // drawer: const AppDrawer(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -131,10 +133,10 @@ class _HomePageState extends State<HomePage> {
                 // Header
                 Row(
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.menu, size: 28),
-                      onPressed: () => _scaffoldKey.currentState?.openDrawer(),
-                    ),
+                    // IconButton(
+                    //   icon: const Icon(Icons.menu, size: 28),
+                    //   onPressed: () => _scaffoldKey.currentState?.openDrawer(),
+                    // ),
                     const SizedBox(width: 12),
                     Text(
                       'Accueil',

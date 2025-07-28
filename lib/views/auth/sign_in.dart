@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../constants/routes.dart';
 import '../../constants/theme.dart';
 import '../../controllers/auth_controller.dart';
 import '../navbar/mainScreen.dart';
@@ -44,10 +45,8 @@ class _SignInScreenState extends State<SignInScreen> {
         SnackBar(content: Text(response['message']), backgroundColor: Colors.green),
       );
 
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
-      );
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.home, (route) => false);
+
     } else {
       showDialog(
         context: context,

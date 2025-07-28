@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../../models/notification_model.dart';
+import '../models/notification_model.dart';
 import '../services/notification_service.dart';
 
 class NotificationDetailDialog extends StatelessWidget {

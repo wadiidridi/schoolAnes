@@ -41,14 +41,24 @@ class NotificationsPage extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              title: Text(
-                notif.title,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: _getColorForPriority(notif.priority),
-                  fontSize: 16,
-                ),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      notif.title,
+                      style: TextStyle(
+                        fontWeight: notif.isRead ? FontWeight.normal : FontWeight.bold,
+                        color: _getColorForPriority(notif.priority),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  if (!notif.isRead)
+                    const Icon(Icons.circle, color: Colors.red, size: 10), // indicateur "non lu"
+                ],
               ),
+
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
