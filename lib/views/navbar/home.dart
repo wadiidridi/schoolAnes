@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../constants/theme.dart';
 import '../../models/notification_model.dart';
 import '../../services/notification_service.dart';
 import '../NotificationDetailDialog.dart';
@@ -283,63 +284,56 @@ class _HomePageState extends State<HomePage> {
         },
         child: Padding(
           padding: const EdgeInsets.all(12.0),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: _getCardColorForPriority(notif.priority),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  _getIconForType(notif.type),
-                  color: _getColorForPriority(notif.priority),
-                  size: 24,
-                ),
+          child: ListTile(
+            contentPadding: const EdgeInsets.all(16),
+            leading: CircleAvatar(
+              backgroundColor: AppTheme.secondary,
+              child: Icon(
+                _getIconForType(notif.type),
+                color: Colors.white,
               ),
-              const SizedBox(width: 12),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      notif.title,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: _getColorForPriority(notif.priority),
-                      ),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
+            ),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    notif.title,
+                    style: TextStyle(
+                      fontWeight: notif.isRead ? FontWeight.normal : FontWeight.bold,
+                      color: _getColorForPriority(notif.priority),
+                      fontSize: 16,
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      notif.content,
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                      ),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    if (notif.publishDate != null)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Text(
-                          _formatDate(notif.publishDate!),
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey[600],
-                          ),
-                        ),
-                      ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
+                if (!notif.isRead)
+                  const Icon(Icons.circle, color: Colors.red, size: 10),
+              ],
+            ),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 6),
+                Text(
+                  notif.content,
+                  style: const TextStyle(fontSize: 14),
+                ),
+                const SizedBox(height: 6),
+                if (notif.publishDate != null)
+                  Text(
+                    _formatDate(notif.publishDate!),
+                    style: const TextStyle(fontSize: 12, color: Colors.grey),
+                  ),
+              ],
+            ),
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) =>
+                    NotificationDetailDialog(notification: notif),
+              );
+            },
+          ),        ),
       ),
     );
   }

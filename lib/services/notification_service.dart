@@ -99,4 +99,22 @@ class NotificationService {
     } catch (e) {
       print("⚠️ Exception: $e");
     }
-  }}
+  }
+  static Future<void> markAsRead(String notificationId) async {
+    final token = await TokenStorageService.getToken();
+    final url = '${ApiEndpoints.notification}/$notificationId/read';
+
+    final response = await http.patch(
+      Uri.parse(url),
+      headers: {
+        'Authorization': 'Bearer $token',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception('Erreur lors du marquage comme lu');
+    }
+  }
+
+}

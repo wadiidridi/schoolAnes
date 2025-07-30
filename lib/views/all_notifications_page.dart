@@ -114,15 +114,37 @@ class _NotificationsPageState extends State<NotificationsPage> {
                     ),
                 ],
               ),
-              onTap: () {
-                showDialog(
-                  context: context,
-                  builder: (context) =>
-                      NotificationDetailDialog(notification: notif),
-                );
-              },
-            ),
-          );
+                onTap: () async {
+                  if (!notif.isRead) {
+                    try {
+                      await NotificationService.markAsRead(notif.id);
+
+                      setState(() {
+                        _notifications[index] = NotificationModel(
+                          id: notif.id,
+                          title: notif.title,
+                          content: notif.content,
+                          type: notif.type,
+                          priority: notif.priority,
+                          publishDate: notif.publishDate,
+                          attachments: notif.attachments,
+                          isRead: true, // ✅ maintenant c’est lu
+                        );
+                      });
+                    } catch (e) {
+                      debugPrint('❌ Erreur lors du marquage comme lu : $e');
+                      // optionnel : afficher un snackbar
+                    }
+                  }
+
+                  // ✅ Toujours afficher le détail, même si déjà lu
+                  showDialog(
+                    context: context,
+                    builder: (context) => NotificationDetailDialog(notification: _notifications[index]),
+                  );
+                }
+
+          ));
         },
       ),
     );
